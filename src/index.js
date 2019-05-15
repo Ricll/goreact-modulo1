@@ -1,45 +1,34 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import Button from './Button';
 
-class Button extends Component {
-  static defaultProps = {
-    children: "Salvar"
-  };
-
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    children: PropTypes.string
-  };
-
-  render() {
-    return (
-      <button onClick={this.props.onClick} style={{ bbuttonckground: "#F00" }}>
-        {this.props.children}
-      </button>
-    );
-  }
-}
+import './style.scss';
 
 class App extends Component {
   state = {
-    counter: 0
+    counter: 0,
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.counter <= 10;
+  }
+
   handleClick = () => {
-    this.setState({ counter: this.state.counter + 1 });
+    const { counter } = this.state;
+    this.setState({ counter: counter + 1 });
   };
 
   render() {
+    const { counter } = this.state;
     return (
       <div>
         <h1>Hello Word</h1>
-        <h2>{this.state.counter}</h2>
-        <Button onClick={() => alert("PropTypes")} />
+        <h2>{counter}</h2>
+        <Button onClick={() => alert('DefaultProps')} />
         <Button onClick={this.handleClick}>Somar!!!</Button>
       </div>
     );
   }
 }
 
-render(<App />, document.getElementById("app"));
+render(<App />, document.getElementById('app'));
